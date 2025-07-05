@@ -3,6 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 
 import { getEnvVar } from './utils/getEnvVar.js';
+import { getAllContacts, getContactById } from './services/contacts.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -19,8 +20,31 @@ export const setupServer = () => {
     }),
   );
 
-  app.get('/', (req, res) => {
-    res.send('CORS-enabled web server is running!');
+  app.get('/contacts', async (req, res) => {
+    const contacts = await getAllContacts();
+    res.json({
+      status: 200,
+      message: 'Successfully found contacts!',
+      data: contacts,
+    });
+  });
+
+  app.get('/contacts/:contactId', async (req, res) => {
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId);
+
+    if (!contact) {
+      res.status(404).json({
+        message: 'Contact not found',
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: `Successfully found contact with id ${contactId}!`,
+      data: contact,
+    });
   });
 
   app.use((req, res, next) => {
@@ -36,7 +60,7 @@ export const setupServer = () => {
     });
   });
 
-  app.listen(PORT || 3000, () => {
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 };
