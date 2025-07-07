@@ -1,8 +1,10 @@
 import createHttpError from 'http-errors';
 import {
   createContact,
+  deleteContact,
   getAllContacts,
   getContactById,
+  updateContact,
 } from '../services/contacts.js';
 
 export const getContactsController = async (req, res) => {
@@ -36,4 +38,49 @@ export const createContactController = async (req, res) => {
     message: 'Successfully created a contact!',
     data: contact,
   });
+};
+
+export const upsertContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await updateContact(contactId, req.body, {
+    upsert: true,
+  });
+
+  if (!result) {
+    throw createHttpError(404, 'Student not found');
+  }
+
+  const status = result.isNew ? 201 : 200;
+
+  res.status(status).json({
+    status,
+    message: `Successfully upserted a student!`,
+    data: result.contact,
+  });
+};
+
+export const patchContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await updateContact(contactId, req.body);
+
+  if (!result) {
+    throw createHttpError(404, 'Student not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully patched a student!`,
+    data: result.contact,
+  });
+};
+
+export const deleteContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const contact = await deleteContact(contactId);
+
+  if (!contact) {
+    throw createHttpError(404, 'Student not found');
+  }
+
+  res.status(204).send();
 };
