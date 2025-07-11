@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export function getEnvVar(name, defaultValue) {
+  // eslint-disable-next-line no-undef
   const value = process.env[name];
 
   if (value) return value;
