@@ -1,12 +1,13 @@
 import { ContactsCollection } from '../db/models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export const getAllContacts = async ({ page, perPage }) => {
+export const getAllContacts = async ({ page, perPage, sortBy, sortOrder }) => {
   const contactsCount = await ContactsCollection.countDocuments();
 
   const contacts = await ContactsCollection.find()
     .skip((page - 1) * perPage)
     .limit(perPage)
+    .sort({ [sortBy]: sortOrder })
     .exec();
 
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
