@@ -8,9 +8,25 @@ export const registerUserSchema = Joi.object({
     'any.required': 'Username is required',
   }),
   email: Joi.string().email().required().messages({
+    'string.email': 'Email must be a valid email address',
+    'string.base': 'Email should be a string',
+    'string.empty': 'Email cannot be empty',
+    'any.unique': 'Email must be unique',
+    'any.required': 'Email is required',
+  }),
+  password: Joi.string().required().messages({
+    'string.base': 'Password should be a string',
+    'string.empty': 'Password cannot be empty',
+    'any.required': 'Password is required',
+  }),
+});
+
+export const loginUserSchema = Joi.object({
+  email: Joi.string().email().required().messages({
     'string.base': 'Email should be a string',
     'string.email': 'Email must be a valid email address',
-    'any.unique': 'Email must be unique',
+    'string.empty': 'Email cannot be empty',
+    'any.required': 'Email is required',
   }),
   password: Joi.string().required().messages({
     'string.base': 'Password should be a string',
