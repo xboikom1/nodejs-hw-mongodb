@@ -23,6 +23,10 @@ export const createContactSchema = Joi.object({
     .valid('work', 'home', 'personal')
     .default('personal')
     .required(),
+  photo: Joi.string().uri().messages({
+    'string.uri': 'Photo must be a valid URI',
+    'string.empty': 'Photo cannot be empty',
+  }),
 });
 
 export const updateContactSchema = Joi.object({
@@ -44,4 +48,8 @@ export const updateContactSchema = Joi.object({
   contactType: Joi.string()
     .valid('work', 'home', 'personal')
     .default('personal'),
+  photo: Joi.string().uri().messages({
+    'string.uri': 'Photo must be a valid URI',
+    'string.empty': 'Photo cannot be empty',
+  }),
 });
