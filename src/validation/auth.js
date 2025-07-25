@@ -43,3 +43,16 @@ export const sendResetEmailSchema = Joi.object({
     'string.empty': 'Email cannot be empty',
   }),
 });
+
+export const resetPasswordSchema = Joi.object({
+  password: Joi.string().required().messages({
+    'string.base': 'Password should be a string',
+    'string.empty': 'Password cannot be empty',
+    'any.required': 'Password is required',
+  }),
+  token: Joi.string().required().messages({
+    'string.base': 'Token should be a string',
+    'string.empty': 'Token cannot be empty',
+    'any.required': 'Token is required',
+  }),
+});
