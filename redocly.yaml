@@ -5,14 +5,14 @@ extends:
   - recommended
 rules:
   no-unused-components: error
-openapi:
-  htmlTemplate: ./docs/index.html
-  theme:
-    colors:
-      primary:
-        main: '#32329f'
+theme:
+  openapi:
+    htmlTemplate: ./docs/index.html
+  colors:
+    primary:
+      main: '#32329f'
   generateCodeSamples:
     languages:
-      - lang: curl
       - lang: Node.js
       - lang: JavaScript
+      - lang: TypeScript

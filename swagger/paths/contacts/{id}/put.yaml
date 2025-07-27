@@ -1,10 +1,17 @@
 tags:
   - Contacts
-summary: Create contact
-operationId: createContact
-description: 'Create a contact with payload'
+summary: Replace contact
+operationId: replaceContact
+description: 'Replace a contact by id with new data'
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
 requestBody:
   content:
     multipart/form-data:
@@ -41,8 +48,8 @@ requestBody:
             type: string
             format: binary
 responses:
-  '201':
-    description: Creates a contact
+  '200':
+    description: Successfully replaced the contact!
     content:
       application/json:
         schema:
@@ -54,14 +61,15 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully replaced the contact!
             data:
-              type: object
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: '../../../components/schemas/contact.yaml'
   '400':
-    $ref: '../../components/responses/400.yaml'
+    $ref: '../../../components/responses/400.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404-contact.yaml'

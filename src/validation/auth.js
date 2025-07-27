@@ -6,6 +6,7 @@ export const registerUserSchema = Joi.object({
     'string.min': 'Username should have at least {#limit} characters',
     'string.max': 'Username should have at most {#limit} characters',
     'any.required': 'Username is required',
+    'string.empty': 'Username cannot be empty',
   }),
   email: Joi.string().email().required().messages({
     'string.email': 'Email must be a valid email address',
