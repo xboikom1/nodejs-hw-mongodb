@@ -13,18 +13,23 @@ export const createContactSchema = Joi.object({
     'string.empty': 'Phone number cannot be empty',
     'any.required': 'Phone number is required',
   }),
-  email: Joi.string().email().allow(null).messages({
+  email: Joi.string().email().allow('').messages({
     'string.email': 'Email must be a valid email address',
     'string.base': 'Email should be a string',
-    'string.empty': 'Email cannot be empty',
   }),
-  isFavourite: Joi.boolean().default(false),
+  isFavourite: Joi.boolean().default(false).messages({
+    'boolean.base': 'isFavourite should be a boolean',
+  }),
   contactType: Joi.string()
     .valid('work', 'home', 'personal')
     .default('personal')
-    .required(),
+    .messages({
+      'string.base': 'Contact type should be a string',
+      'any.only': 'Contact type must be one of work, home, or personal',
+    }),
   photo: Joi.string().uri().messages({
     'string.uri': 'Photo must be a valid URI',
+    'string.base': 'Photo should be a string',
     'string.empty': 'Photo cannot be empty',
   }),
 });
@@ -40,16 +45,23 @@ export const updateContactSchema = Joi.object({
     'string.base': 'Phone number should be a string',
     'string.empty': 'Phone number cannot be empty',
   }),
-  email: Joi.string().email().allow(null).messages({
+  email: Joi.string().email().allow('').messages({
     'string.email': 'Email must be a valid email address',
-    'string.empty': 'Email cannot be empty',
+    'string.base': 'Email should be a string',
   }),
-  isFavourite: Joi.boolean().default(false),
+  isFavourite: Joi.boolean().default(false).messages({
+    'boolean.base': 'isFavourite should be a boolean',
+  }),
   contactType: Joi.string()
     .valid('work', 'home', 'personal')
-    .default('personal'),
+    .default('personal')
+    .messages({
+      'string.base': 'Contact type should be a string',
+      'any.only': 'Contact type must be one of work, home, or personal',
+    }),
   photo: Joi.string().uri().messages({
     'string.uri': 'Photo must be a valid URI',
+    'string.base': 'Photo should be a string',
     'string.empty': 'Photo cannot be empty',
   }),
 });
